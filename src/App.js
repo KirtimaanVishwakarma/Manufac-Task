@@ -10,26 +10,23 @@ function App() {
   // alcohalListByCategory: array of alcohal list by name
   const [alcohalListByName, setAlcohalListByName] = useState([]);
 
-  // function to find the Alcohol name
-  const alcoholName = () => {
-    return wineList
-      .map((ele) => ele.Alcohol)
-      .filter((ele, ind, arr) => arr.indexOf(ele) === ind);
-  };
-
   useEffect(() => {
+    const alcoholName = [];
+    for (const ele of wineList) {
+      if (alcoholName.indexOf(ele.Alcohol) === -1) {
+        alcoholName.push(ele.Alcohol);
+      }
+    }
     // alcoholNameList is array which contains the alohocol name
-    const alcoholNameList = alcoholName();
-
-    setAlcoholNameList(alcoholName());
+    setAlcoholNameList(alcoholName);
 
     // alcoholListByName is a function to create arrays by alcohol name
     const alcoholListByName = () => {
       const arr = [];
 
-      for (let i = 0; i < alcoholNameList.length; i++) {
+      for (let i = 0; i < alcoholName.length; i++) {
         const newData = wineList.filter(
-          (ele) => ele.Alcohol === alcoholNameList[i]
+          (ele) => ele.Alcohol === alcoholName[i]
         );
         arr.push(newData);
       }
